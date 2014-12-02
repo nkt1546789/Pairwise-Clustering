@@ -1,6 +1,5 @@
 Pairwise Clustering
 ===================
-
 <img src="https://github.com/nkt1546789/Pairwise-Clustering/blob/master/blobs_by_pairwise_clustering.png" align="right" height="400" width="400" >
 
 In Pairwise Clustering, clustering problems are casted into binary clustering problems of sample pairs.
