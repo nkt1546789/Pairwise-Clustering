@@ -30,6 +30,13 @@ class CCPM(BaseEstimator):
         self.label=ypred
         return self
 
+    def predict(self,x):
+        Phi=pairwise_kernels(x,self.xce,metric="rbf",gamma=1./(2*self.sigma**2))
+        ppred1=maximum(Phi.dot(self.alpha),0.)
+        #ppred1=exp(-Phi.dot(self.alpha))
+        ypred=ppred1>=0.5
+        return ypred
+
     def score(self,x):
         n=len(x)
         Phi=pairwise_kernels(x,self.xce,metric="rbf",gamma=1./(2*self.sigma**2))
@@ -42,7 +49,9 @@ class CCPM(BaseEstimator):
 class CCPMCV(CCPM):
     def fit(self,x):
         params={"sigma":logspace(-1,1,10),"lam":logspace(-1,1,10)}
-        self=GridSearchCV(CCPM(),params).fit(x).best_estimator_
+        gs=GridSearchCV(CCPM(),params).fit(x)
+        print gs.best_params_
+        self=gs.best_estimator_
         return self
 
 def main():
